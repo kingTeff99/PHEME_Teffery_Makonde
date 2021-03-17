@@ -36,9 +36,11 @@ public class AnalyticsSymptoms {
 		 	 * @exception print error if the file does not exist
 		 	 * or is not available when BufferedRead reads.
 		 	 * 
+		 	 * Replace "filepath" by your filepath
+		 	 * 
 		 	 * @param br
 		 	 */
-	        try (BufferedReader br = new BufferedReader(new FileReader(new File("/Users/kingteff/Desktop/training/symptoms.txt")))) 
+	        try (BufferedReader br = new BufferedReader(new FileReader(new File("filepath")))) 
 	        {
 	        	/**
 	        	 * 
