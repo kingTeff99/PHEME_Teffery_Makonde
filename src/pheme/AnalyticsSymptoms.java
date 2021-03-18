@@ -13,8 +13,6 @@ import java.util.TreeMap;
  * AnalyticsSymptoms is the class represents all symptoms contains
  * in Symptoms.txt file.
  * 
- * Displays 
- * 
  * @author Teffery MAKONDE
  * @version 1.0
  * 
@@ -23,47 +21,33 @@ public class AnalyticsSymptoms {
 
 	public static void main(String[] args) {
 		/**
-		 * A map contains for key symptoms as string and 
-		 * value as integer the number of times when symptoms appears.
-		 * 
-		 * @see getSymptoms
-		 * 
+		 * SortedMap that will contains disease and their occurencies <DiseaseName,OccurenciesCOunt>
 		 */
-		 Map<String, Integer> getSymptoms = new TreeMap<>();
+		 Map<String, Integer> getSymptomMap = new TreeMap<>();
 		 
 		 	/**
-		 	 * 
-		 	 * @exception print error if the file does not exist
-		 	 * or is not available when BufferedRead reads.
-		 	 * 
-		 	 * Replace "filepath" by your filepath
-		 	 * 
-		 	 * @param br
+		 	 * Open the file that contains disease list
 		 	 */
 	        try (BufferedReader br = new BufferedReader(new FileReader(new File("filepath")))) 
 	        {
-	        	/**
-	        	 * 
-	        	 * @param currentSymptoms
-	        	 * 
-	        	 */
 	            String currentSymptoms;
-
+	            /**
+	             * Read each line of the opened file
+	             */
 	            while ((currentSymptoms = br.readLine()) != null) 
 	            {
 	            	 /**
-	            	  * 
-	            	  * @see count, 
+	            	  * Does the current symptoms is already in our disease map ?
 	            	  */
-	                 Integer count = getSymptoms.get(currentSymptoms);
+	                 Integer count = getSymptomMap.get(currentSymptoms);
 
 	                 if(count == null) 
 	                 { 
-	                    getSymptoms.put(currentSymptoms, 1);
+	                    getSymptomMap.put(currentSymptoms, 1);
 	                 }
 	                 else 
 	                 { 
-	                     getSymptoms.put(currentSymptoms, count + 1);
+	                     getSymptomMap.put(currentSymptoms, count + 1);
 	                 }
 	            }
 	        } catch (IOException e) {
@@ -72,19 +56,11 @@ public class AnalyticsSymptoms {
 	        
             File file = new File("results.out");// name file in output
             /**
-             * 
-             * @param file, contains 
-             * 
-             * @param br1
+             * Write into the file named "results.out" from the map
              */
 	        try (BufferedWriter br1 = new BufferedWriter(new FileWriter(file)))
 	        {
-	        	/**
-	        	 * 
-	        	 * @see currentEntry,
-	        	 * 
-	        	 */
-	        	for(Map.Entry<String, Integer> currentEntry : getSymptoms.entrySet()) {
+	        	for(Map.Entry<String, Integer> currentEntry : getSymptomMap.entrySet()) {
 	        		br1.write(" Disease : " + currentEntry.getKey() + " = " + currentEntry.getValue());
 	        		br1.newLine();
 	        	}	
