@@ -20,8 +20,10 @@ import java.util.TreeMap;
 public class AnalyticsSymptoms {
 
 	public static void main(String[] args) {
-		
-		Map<String, Integer> diseaseOccurMap = getDiseaseMapFromFile(new File("/Users/kingteff/Downloads/symptoms.txt"));
+		/**
+		 * Read file and count the symptoms occurencies in a map
+		 */
+		Map<String, Integer> diseaseOccurMap = getDiseaseMapFromFile(new File("symptoms.txt"));
 		
 		writeDiseaseMapToFile(new File("results.out"), diseaseOccurMap);
 
