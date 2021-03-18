@@ -20,55 +20,62 @@ import java.util.TreeMap;
 public class AnalyticsSymptoms {
 
 	public static void main(String[] args) {
+		
+		Map<String, Integer> diseaseOccurMap = getDiseaseMapFromFile(new File("/Users/kingteff/Downloads/symptoms.txt"));
+		
+		writeDiseaseMapToFile(new File("results.out"), diseaseOccurMap);
+
+	}
+           
+	static Map<String, Integer> getDiseaseMapFromFile(File sourceFile) {
 		/**
-		 * SortedMap that will contains disease and their occurencies <DiseaseName,OccurenciesCOunt>
+		 * SortedMap that will contains disease and their occurencies
 		 */
-		 Map<String, Integer> getSymptomMap = new TreeMap<>();
-		 
+		 Map<String, Integer> diseaseOccurenciesMap = new TreeMap<>();
 		 	/**
 		 	 * Open the file that contains disease list
 		 	 */
-	        try (BufferedReader br = new BufferedReader(new FileReader(new File("filepath")))) 
+	        try (BufferedReader br = new BufferedReader(new FileReader(sourceFile))) 
 	        {
-	            String currentSymptoms;
+	            String currentSymptom;
 	            /**
 	             * Read each line of the opened file
 	             */
-	            while ((currentSymptoms = br.readLine()) != null) 
+	            while ((currentSymptom = br.readLine()) != null) 
 	            {
 	            	 /**
 	            	  * Does the current symptoms is already in our disease map ?
 	            	  */
-	                 Integer count = getSymptomMap.get(currentSymptoms);
+	                 Integer count = diseaseOccurenciesMap.get(currentSymptom);
 
 	                 if(count == null) 
-	                 { 
-	                    getSymptomMap.put(currentSymptoms, 1);
-	                 }
-	                 else 
-	                 { 
-	                     getSymptomMap.put(currentSymptoms, count + 1);
-	                 }
+	                	 count = 0;
+	                
+	                 diseaseOccurenciesMap.put(currentSymptom, count + 1);
 	            }
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
 	        
-            File file = new File("results.out");// name file in output
-            /**
-             * Write into the file named "results.out" from the map
-             */
-	        try (BufferedWriter br1 = new BufferedWriter(new FileWriter(file)))
+	        return diseaseOccurenciesMap;
+	}
+	
+	static File writeDiseaseMapToFile(File Output, Map<String, Integer> diseaseOccurenciesMap) {
+         /**
+          * Write into the file named "results.out" from the map
+          */
+	        try (BufferedWriter bw1 = new BufferedWriter(new FileWriter(Output)))
 	        {
-	        	for(Map.Entry<String, Integer> currentEntry : getSymptomMap.entrySet()) {
-	        		br1.write(" Disease : " + currentEntry.getKey() + " = " + currentEntry.getValue());
-	        		br1.newLine();
+	        	for(Map.Entry<String, Integer> currentEntry : diseaseOccurenciesMap.entrySet()) {
+	        		bw1.write(" Disease : " + currentEntry.getKey() + " = " + currentEntry.getValue());
+	        		bw1.newLine();
 	        	}	
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
+	        
+	        return Output;
 	}
-
 }
 
 
